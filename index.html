@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d110e">
+    <meta name="description" content="S.E Digital Solutions — website design & development, portfolios, digital invitations, landing pages, UI/UX, and responsive optimization.">
+    <title>S.E Digital Solutions — Website Design & Development</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..650;1,9..144,400..650&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        /* Apply the stored theme before first paint to avoid a flash */
+        (function() {
+            try {
+                var t = localStorage.getItem("se-theme");
+                if (t === "light" || t === "dark") {
+                    document.documentElement.setAttribute("data-theme", t);
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <style>
+        /* ============ 1. Reset & design tokens ============ */
+        
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+        
+        * {
+            margin: 0
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--header-h) + 1rem)
+        }
+        
+        html {
+            --header-h: 4rem;
+            --radius: 16px;
+            --container: 1160px;
+            --gutter: clamp(1rem, 4vw, 2.5rem);
+            --ease: cubic-bezier(.22, .75, .25, 1)
+        }
+        
+        html {
+            --font-display: "Fraunces", "IBM Plex Sans Arabic", Georgia, serif;
+            --font-body: "Instrument Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif
+        }
+        
+        html[lang="ar"] {
+            --font-display: "IBM Plex Sans Arabic", "Instrument Sans", sans-serif;
+            --font-body: "IBM Plex Sans Arabic", "Instrument Sans", sans-serif
+        }
+        
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #0d110e;
+            --surface: #141a15;
+            --surface-2: #1a211b;
+            --ink: #ece9e0;
+            --muted: #a0a89d;
+            --line: #273029;
+            --accent: #4cc08f;
+            --accent-ink: #0b0f0c;
+            --accent-soft: rgba(76, 192, 143, .12);
+            --dot: rgba(236, 233, 224, .07);
+            --shadow: 0 18px 40px -28px rgba(0, 0, 0, .9);
+            --header-shadow: 0 12px 32px -20px rgba(0, 0, 0, .7);
+        }
+        
+        html[data-theme="light"] {
+            color-scheme: light;
+            --bg: #f6f4ed;
+            --surface: #fffdf8;
+            --surface-2: #efece2;
+            --ink: #1b201b;
+            --muted: #5c635a;
+            --line: #e2ddcf;
+            --accent: #1d7a53;
+            --accent-ink: #f6f4ed;
+            --accent-soft: rgba(29, 122, 83, .10);
+            --dot: rgba(27, 32, 27, .09);
+            --shadow: 0 18px 40px -30px rgba(27, 32, 27, .5);
+            --header-shadow: 0 12px 32px -22px rgba(27, 32, 27, .22);
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            transition: background .3s, color .3s;
+            overflow-x: clip
+        }
+        
+        html[lang="ar"] body {
+            line-height: 1.8
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto
+        }
+        
+        svg {
+            max-width: 100%;
+            display: block
+        }
+        
+        a {
+            color: inherit
+        }
+        
+        button {
+            font: inherit;
+            color: inherit;
+            background: none;
+            border: 0;
+            cursor: pointer;
+            padding: 0
+        }
+        
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px
+        }
+        
+        ::selection {
+            background: var(--accent);
+            color: var(--accent-ink)
+        }
+        
+        [id] {
+            scroll-margin-top: calc(var(--header-h) + 1rem)
+        }
+        
+        .container {
+            width: min(var(--container), 100% - (2 * var(--gutter)));
+            margin-inline: auto
+        }
+        /* ============ 2. Buttons ============ */
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .55rem;
+            min-height: 3rem;
+            padding: .7rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: .95rem;
+            text-decoration: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            transition: transform .25s var(--ease), background .25s, border-color .25s, color .25s
+        }
+        
+        .btn svg {
+            width: 1.05rem;
+            height: 1.05rem;
+            flex: none
+        }
+        
+        .btn:active {
+            transform: scale(.97)
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: var(--accent-ink)
+        }
+        
+        .btn-accent:hover {
+            background: color-mix(in srgb, var(--accent) 88%, var(--ink))
+        }
+        
+        .btn-ghost {
+            border-color: var(--line);
+            background: var(--surface)
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--ink)
+        }
+        
+        .btn-ink {
+            background: var(--accent-ink);
+            color: var(--accent)
+        }
+        
+        .btn-ink:hover {
+            background: color-mix(in srgb, var(--accent-ink) 90%, var(--accent))
+        }
+        
+        .btn-outline-ink {
+            border-color: color-mix(in srgb, var(--accent-ink) 45%, transparent);
+            color: var(--accent-ink)
+        }
+        
+        .btn-outline-ink:hover {
+            background: color-mix(in srgb, var(--accent-ink) 12%, transparent)
+        }
+        /* ============ 3. Header & navigation (refined) ============ */
+        
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 82%, transparent);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s, box-shadow .3s, background .3s
+        }
+        
+        .site-header.scrolled {
+            border-bottom-color: var(--line);
+            box-shadow: var(--header-shadow)
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            min-height: var(--header-h)
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            text-decoration: none;
+            flex: none
+        }
+        
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            inline-size: 2.35rem;
+            block-size: 2.35rem;
+            background: var(--accent);
+            color: var(--accent-ink);
+            border-radius: 10px;
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 600;
+            font-size: .95rem;
+            letter-spacing: -.02em;
+            flex: none
+        }
+        
+        html[lang="ar"] .brand-mark {
+            font-style: normal
+        }
+        
+        .brand-text {
+            font-size: .76rem;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap
+        }
+        
+        html[lang="ar"] .brand-text {
+            letter-spacing: .02em
+        }
+        
+        @media(max-width:379px) {
+            .brand-text {
+                display: none
+            }
+        }
+        /* Desktop links: centered group, animated underline, scroll-spy active state */
+        
+        .main-nav {
+            display: none
+        }
+        
+        .main-nav a {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            min-height: 2.75rem;
+            padding: .4rem .8rem;
+            font-size: .95rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            border-radius: 10px;
+            white-space: nowrap;
+            transition: color .25s
+        }
+        
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--ink)
+        }
+        
+        .main-nav a.active {
+            color: var(--accent)
+        }
+        
+        .main-nav a::after {
+            content: "";
+            position: absolute;
+            inset-inline: .8rem;
+            bottom: .5rem;
+            height: 1.5px;
+            background: var(--accent);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform .3s var(--ease)
+        }
+        
+        .main-nav a:hover::after,
+        .main-nav a.active::after {
+            transform: scaleX(1)
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: .45rem;
+            margin-inline-start: auto;
+            flex: none
+        }
+        
+        .icon-btn {
+            display: grid;
+            place-items: center;
+            inline-size: 2.75rem;
+            block-size: 2.75rem;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            transition: border-color .25s, transform .2s
+        }
+        
+        .icon-btn:hover {
+            border-color: color-mix(in srgb, var(--accent) 55%, var(--line))
+        }
+        
+        .icon-btn:active {
+            transform: scale(.93)
+        }
+        
+        .icon-btn svg {
+            width: 1.15rem;
+            height: 1.15rem
+        }
+        
+        .lang-btn {
+            min-inline-size: 2.9rem;
+            block-size: 2.75rem;
+            padding-inline: .7rem;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            font-size: .84rem;
+            font-weight: 600;
+            transition: border-color .25s, transform .2s
+        }
+        
+        .lang-btn:hover {
+            border-color: color-mix(in srgb, var(--accent) 55%, var(--line))
+        }
+        
+        .lang-btn:active {
+            transform: scale(.95)
+        }
+        /* Theme icons: exactly one visible, matching the current theme */
+        
+        .icon-sun,
+        .icon-moon {
+            display: none
+        }
+        
+        html[data-theme="dark"] .icon-sun {
+            display: block
+        }
+        
+        html[data-theme="light"] .icon-moon {
+            display: block
+        }
+        /* Prominent Contact button — desktop only (mobile menu carries its own CTA) */
+        
+        .nav-cta {
+            display: none;
+            min-height: 2.75rem;
+            padding: .55rem 1.25rem;
+            font-size: .9rem
+        }
+        
+        .burger {
+            display: grid
+        }
+        
+        .icon-close {
+            display: none
+        }
+        
+        .menu-open .icon-menu {
+            display: none
+        }
+        
+        .menu-open .icon-close {
+            display: block
+        }
+        
+        @media(min-width:960px) {
+            .main-nav {
+                display: flex;
+                align-items: center;
+                gap: .25rem;
+                margin-inline: auto;
+                padding-inline: 1rem
+            }
+            .header-controls {
+                margin-inline-start: 0
+            }
+            .nav-cta {
+                display: inline-flex
+            }
+            .burger {
+                display: none
+            }
+        }
+        /* Mobile menu panel */
+        
+        .mobile-menu {
+            position: absolute;
+            inset-inline: 0;
+            top: 100%;
+            max-height: calc(100vh - var(--header-h));
+            max-height: calc(100dvh - var(--header-h));
+            overflow-y: auto;
+            background: var(--bg);
+            background: color-mix(in srgb, var(--bg) 94%, transparent);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            padding: .2rem var(--gutter) 1.4rem;
+            box-shadow: var(--shadow);
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(-.5rem);
+            transition: opacity .26s var(--ease), transform .26s var(--ease), visibility 0s linear .26s
+        }
+        
+        .menu-open .mobile-menu {
+            visibility: visible;
+            opacity: 1;
+            transform: none;
+            transition-delay: 0s
+        }
+        
+        .mobile-menu>* {
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity .3s var(--ease), transform .3s var(--ease)
+        }
+        
+        .menu-open .mobile-menu>* {
+            opacity: 1;
+            transform: none;
+            transition-delay: calc(var(--i, 0)*35ms)
+        }
+        
+        .mobile-menu a:not(.btn) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 3.5rem;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--line)
+        }
+        
+        .mobile-menu a:not(.btn).active {
+            color: var(--accent)
+        }
+        
+        .mobile-menu .btn {
+            margin-top: 1.1rem;
+            width: 100%
+        }
+        
+        .menu-row {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            width: 100%;
+            min-height: 3.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: start;
+            border-bottom: 1px solid var(--line)
+        }
+        
+        .menu-row svg {
+            width: 1.15rem;
+            height: 1.15rem;
+            color: var(--muted);
+            flex: none
+        }
+        
+        .menu-row:hover svg {
+            color: var(--accent)
+        }
+        
+        .menu-row-state {
+            margin-inline-start: auto;
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--muted)
+        }
+        /* ============ 4. Hero ============ */
+        
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding-block: clamp(3.5rem, 9vw, 7rem) clamp(3rem, 8vw, 6rem)
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--dot) 1px, transparent 1.5px);
+            background-size: 22px 22px;
+            -webkit-mask-image: radial-gradient(120% 90% at 30% 0%, #000 40%, transparent 78%);
+            mask-image: radial-gradient(120% 90% at 30% 0%, #000 40%, transparent 78%);
+            pointer-events: none
+        }
+        
+        html[dir="rtl"] .hero::before {
+            -webkit-mask-image: radial-gradient(120% 90% at 70% 0%, #000 40%, transparent 78%);
+            mask-image: radial-gradient(120% 90% at 70% 0%, #000 40%, transparent 78%)
+        }
+        
+        .hero .container {
+            position: relative
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .42rem .95rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--surface);
+            font-size: .8rem;
+            font-weight: 500;
+            color: var(--muted)
+        }
+        
+        .badge-dot {
+            inline-size: .5rem;
+            block-size: .5rem;
+            border-radius: 50%;
+            background: var(--accent);
+            position: relative;
+            flex: none
+        }
+        
+        .badge-dot::after {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 1px solid var(--accent);
+            animation: pulse 2.6s ease-out infinite
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(.6);
+                opacity: .9
+            }
+            70% {
+                transform: scale(1.7);
+                opacity: 0
+            }
+            100% {
+                transform: scale(1.7);
+                opacity: 0
+            }
+        }
+        
+        .hero h1 {
+            margin-top: 1.4rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(2.2rem, 1.35rem + 4.2vw, 4.4rem);
+            line-height: 1.08;
+            letter-spacing: -.022em;
+            max-width: 21ch
+        }
+        
+        html[lang="ar"] .hero h1 {
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 1.28
+        }
+        
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+            position: relative
+        }
+        
+        html[lang="ar"] .hero h1 em {
+            font-style: normal
+        }
+        
+        .hero h1 em::after {
+            content: "";
+            position: absolute;
+            inset-inline-start: 0;
+            bottom: .02em;
+            inline-size: 100%;
+            height: 2px;
+            background: currentColor;
+            opacity: .55;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: draw .8s var(--ease) .5s forwards
+        }
+        
+        html[dir="rtl"] .hero h1 em::after {
+            transform-origin: right
+        }
+        
+        @keyframes draw {
+            to {
+                transform: scaleX(1)
+            }
+        }
+        
+        .hero-sub {
+            margin-top: 1.25rem;
+            max-width: 56ch;
+            font-size: clamp(1rem, .95rem + .4vw, 1.15rem);
+            color: var(--muted)
+        }
+        
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+            margin-top: 2rem
+        }
+        
+        .hero-scroll {
+            margin-top: clamp(2.5rem, 6vw, 4rem);
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+        
+        html[lang="ar"] .hero-scroll {
+            letter-spacing: .02em
+        }
+        
+        .hero-scroll svg {
+            width: .9rem;
+            height: .9rem;
+            animation: bob 2.2s ease-in-out infinite
+        }
+        
+        @keyframes bob {
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(4px)
+            }
+        }
+        /* ============ 5. Sections & headings ============ */
+        
+        .section {
+            padding-block: clamp(3.5rem, 8vw, 6.5rem);
+            border-top: 1px solid var(--line)
+        }
+        
+        .section-head {
+            max-width: 62ch;
+            margin-bottom: clamp(2rem, 5vw, 3.25rem)
+        }
+        
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--accent)
+        }
+        
+        html[lang="ar"] .eyebrow {
+            letter-spacing: .04em
+        }
+        
+        .eyebrow::before {
+            content: "";
+            inline-size: 1.5rem;
+            block-size: 1px;
+            background: var(--accent);
+            flex: none
+        }
+        
+        .section-title {
+            margin-top: .9rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+            line-height: 1.12;
+            letter-spacing: -.015em;
+            overflow-wrap: break-word
+        }
+        
+        html[lang="ar"] .section-title {
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 1.35
+        }
+        
+        .section-sub {
+            margin-top: .9rem;
+            color: var(--muted);
+            font-size: clamp(.98rem, .94rem + .3vw, 1.08rem);
+            max-width: 54ch
+        }
+        /* ============ 5b. About (compact — destination for the navbar About link) ============ */
+        
+        .about-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            margin-top: 1.4rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none
+        }
+        
+        .about-link svg {
+            width: 1rem;
+            height: 1rem;
+            transition: transform .3s var(--ease)
+        }
+        
+        .about-link:hover svg {
+            transform: translateX(3px)
+        }
+        
+        html[dir="rtl"] .about-link svg {
+            transform: scaleX(-1)
+        }
+        
+        html[dir="rtl"] .about-link:hover svg {
+            transform: scaleX(-1) translateX(3px)
+        }
+        /* ============ 6. Services ============ */
+        
+        .services-grid {
+            display: grid;
+            gap: .85rem
+        }
+        
+        .service-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: .65rem;
+            padding: clamp(1.2rem, 2.5vw, 1.5rem);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: inherit;
+            transition: transform .35s var(--ease), border-color .35s, box-shadow .35s
+        }
+        
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+            box-shadow: var(--shadow)
+        }
+        
+        .service-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+        
+        .service-icon {
+            display: grid;
+            place-items: center;
+            inline-size: 2.85rem;
+            block-size: 2.85rem;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            flex: none;
+            transition: transform .35s var(--ease)
+        }
+        
+        .service-icon svg {
+            width: 1.35rem;
+            height: 1.35rem
+        }
+        
+        .service-card:hover .service-icon {
+            transform: translateY(-3px) rotate(-5deg)
+        }
+        
+        .service-index {
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .1em;
+            color: var(--muted);
+            font-variant-numeric: tabular-nums
+        }
+        
+        .service-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.08rem, 1rem + .4vw, 1.28rem);
+            line-height: 1.3;
+            letter-spacing: -.01em;
+            overflow-wrap: break-word
+        }
+        
+        .service-desc {
+            font-size: .94rem;
+            line-height: 1.6;
+            color: var(--muted)
+        }
+        
+        html[lang="ar"] .service-desc {
+            line-height: 1.85
+        }
+        /* Featured (flagship) card — solid accent panel */
+        
+        .service-card--featured {
+            background: var(--accent);
+            border-color: transparent;
+            color: var(--accent-ink)
+        }
+        
+        .service-card--featured:hover {
+            border-color: transparent;
+            box-shadow: var(--shadow)
+        }
+        
+        .service-card--featured .service-icon {
+            background: color-mix(in srgb, var(--accent-ink) 16%, transparent);
+            color: var(--accent-ink)
+        }
+        
+        .service-card--featured .service-index {
+            color: color-mix(in srgb, var(--accent-ink) 72%, transparent)
+        }
+        
+        .service-card--featured .service-desc {
+            color: color-mix(in srgb, var(--accent-ink) 84%, transparent)
+        }
+        
+        .service-note {
+            margin-top: auto;
+            padding-top: .9rem;
+            border-top: 1px solid color-mix(in srgb, var(--accent-ink) 25%, transparent);
+            font-size: .9rem;
+            line-height: 1.6;
+            color: color-mix(in srgb, var(--accent-ink) 84%, transparent)
+        }
+        
+        html[lang="ar"] .service-note {
+            line-height: 1.85
+        }
+        /* Tablet: two columns, featured spans the full row */
+        
+        @media(min-width:600px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: .9rem
+            }
+            .service-card--featured {
+                grid-column: 1/-1
+            }
+            .service-card--featured .service-title {
+                font-size: clamp(1.3rem, 1.1rem + 1vw, 1.6rem)
+            }
+            .service-card--featured .service-desc {
+                max-width: 58ch
+            }
+        }
+        /* Desktop: four columns, featured spans two */
+        
+        @media(min-width:1024px) {
+            .services-grid {
+                grid-template-columns: repeat(4, 1fr)
+            }
+            .service-card--featured {
+                grid-column: span 2
+            }
+        }
+        /* ============ 7. Featured projects ============ */
+        
+        .projects-grid {
+            display: grid;
+            gap: clamp(.9rem, 2vw, 1.25rem)
+        }
+        
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform .35s var(--ease), border-color .35s, box-shadow .35s
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+            box-shadow: var(--shadow)
+        }
+        /* Screenshot area: faux browser chrome + fixed-ratio frame */
+        
+        .project-shot {
+            display: block;
+            position: relative;
+            text-decoration: none;
+            color: inherit
+        }
+        
+        .project-shot:focus-visible {
+            outline-offset: -3px
+        }
+        
+        .shot-bar {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .5rem .75rem;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--line)
+        }
+        
+        .shot-dots {
+            display: flex;
+            gap: .3rem;
+            flex: none
+        }
+        
+        .shot-dots i {
+            inline-size: .5rem;
+            block-size: .5rem;
+            border-radius: 50%;
+            background: color-mix(in srgb, var(--muted) 40%, transparent)
+        }
+        
+        .shot-url {
+            flex: 1;
+            min-width: 0;
+            font-size: .72rem;
+            line-height: 1.4;
+            color: var(--muted);
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: .14rem .65rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        .shot-frame {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: var(--surface-2)
+        }
+        
+        .shot-frame img {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: transform .5s var(--ease)
+        }
+        
+        .project-card:hover .shot-frame img {
+            transform: scale(1.035)
+        }
+        
+        @media(max-width:420px) {
+            .shot-frame {
+                aspect-ratio: 4/3
+            }
+        }
+        /* Honest "pending" state shown only while the local screenshot file is missing */
+        
+        .shot-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .45rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--surface-2)
+        }
+        
+        .shot-fallback[hidden] {
+            display: none
+        }
+        
+        .shot-fallback svg {
+            width: 1.7rem;
+            height: 1.7rem;
+            color: var(--accent)
+        }
+        
+        .shot-pending {
+            font-size: .86rem;
+            font-weight: 600;
+            color: var(--ink)
+        }
+        
+        .shot-add {
+            font-size: .74rem;
+            color: var(--muted)
+        }
+        
+        .shot-path {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: .72rem;
+            color: var(--accent);
+            background: var(--bg);
+            border: 1px dashed var(--line);
+            border-radius: 8px;
+            padding: .3rem .6rem;
+            direction: ltr;
+            unicode-bidi: isolate;
+            max-width: calc(100% - 2rem);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        .project-body {
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+            flex: 1;
+            padding: clamp(1.1rem, 2.5vw, 1.4rem)
+        }
+        
+        .project-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.15rem, 1.05rem + .5vw, 1.35rem);
+            line-height: 1.3;
+            letter-spacing: -.01em;
+            overflow-wrap: break-word
+        }
+        
+        html[lang="ar"] .project-title {
+            font-weight: 700;
+            letter-spacing: 0
+        }
+        
+        .project-desc {
+            font-size: .94rem;
+            line-height: 1.6;
+            color: var(--muted)
+        }
+        
+        html[lang="ar"] .project-desc {
+            line-height: 1.85
+        }
+        
+        .project-cta {
+            margin-top: auto;
+            width: 100%
+        }
+        
+        .project-cta svg {
+            transition: transform .3s var(--ease)
+        }
+        
+        .project-cta:hover svg {
+            transform: translate(2px, -2px)
+        }
+        
+        html[dir="rtl"] .project-cta svg {
+            transform: scaleX(-1)
+        }
+        
+        html[dir="rtl"] .project-cta:hover svg {
+            transform: scaleX(-1) translate(2px, -2px)
+        }
+        /* Tablet: two columns, third card becomes a wide feature row */
+        
+        @media(min-width:680px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+            .project-card--wide {
+                grid-column: 1/-1
+            }
+            .project-card--wide .shot-frame {
+                aspect-ratio: 16/7
+            }
+            .project-card--wide .project-desc {
+                max-width: 64ch
+            }
+        }
+        /* Desktop: three equal columns */
+        
+        @media(min-width:1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+            .project-card--wide {
+                grid-column: auto
+            }
+            .project-card--wide .shot-frame {
+                aspect-ratio: 16/10
+            }
+        }
+        /* ============ 8. Contact ============ */
+        
+        .contact-panel {
+            position: relative;
+            overflow: hidden;
+            background: var(--accent);
+            color: var(--accent-ink);
+            border-radius: clamp(18px, 3vw, 26px);
+            padding: clamp(2rem, 6vw, 4.5rem)
+        }
+        
+        .contact-watermark {
+            position: absolute;
+            inset-inline-end: -1.5rem;
+            inset-block-end: -2.5rem;
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 600;
+            font-size: clamp(6rem, 22vw, 14rem);
+            line-height: 1;
+            opacity: .09;
+            pointer-events: none;
+            user-select: none
+        }
+        
+        html[lang="ar"] .contact-watermark {
+            font-style: normal
+        }
+        
+        .contact-panel .eyebrow {
+            color: var(--accent-ink)
+        }
+        
+        .contact-panel .eyebrow::before {
+            background: var(--accent-ink)
+        }
+        
+        .contact-title {
+            margin-top: .9rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(1.9rem, 1.3rem + 3vw, 3.4rem);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+            max-width: 18ch;
+            overflow-wrap: break-word
+        }
+        
+        html[lang="ar"] .contact-title {
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 1.3
+        }
+        
+        .contact-sub {
+            margin-top: 1rem;
+            max-width: 46ch;
+            color: color-mix(in srgb, var(--accent-ink) 84%, transparent)
+        }
+        
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+            margin-top: 2rem
+        }
+        /* ============ 9. Footer ============ */
+        
+        .site-footer {
+            border-top: 1px solid var(--line);
+            padding-block: 1.6rem
+        }
+        
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: .8rem;
+            align-items: flex-start
+        }
+        
+        @media(min-width:760px) {
+            .footer-inner {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between
+            }
+        }
+        
+        .footer-copy {
+            font-size: .85rem;
+            color: var(--muted)
+        }
+        
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.1rem
+        }
+        
+        .footer-nav a {
+            font-size: .85rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .25s
+        }
+        
+        .footer-nav a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 4px
+        }
+        /* ============ 10. Accessibility helpers ============ */
+        
+        .skip-link {
+            position: absolute;
+            inset-inline-start: 1rem;
+            top: -3rem;
+            z-index: 100;
+            background: var(--ink);
+            color: var(--bg);
+            padding: .6rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: top .2s
+        }
+        
+        .skip-link:focus {
+            top: .75rem
+        }
+        /* Reveal-on-scroll (staggered via --i, uses animation so hover transitions stay clean) */
+        
+        [data-reveal] .rv {
+            opacity: 0
+        }
+        
+        [data-reveal].in .rv {
+            opacity: 1;
+            animation: rise .6s var(--ease) backwards;
+            animation-delay: calc(var(--i, 0)*70ms)
+        }
+        
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(16px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        /* ============ 11. Reduced motion ============ */
+        
+        @media(prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+            [data-reveal] .rv {
+                opacity: 1;
+                animation: none!important
+            }
+            .badge-dot::after,
+            .hero-scroll svg {
+                animation: none
+            }
+            .hero h1 em::after {
+                animation: none;
+                transform: scaleX(1)
+            }
+            * {
+                transition-duration: .01ms!important;
+                animation-duration: .01ms!important
+            }
+        }
+    </style>
+    <noscript><style>[data-reveal] .rv{opacity:1}</style></noscript>
+</head>
+
+<body id="top">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="S.E Digital Solutions — Home" data-i18n-attr="aria-label:brand.home">
+                <span class="brand-mark" aria-hidden="true">S.E</span>
+                <span class="brand-text" data-i18n="brand.tagline">Digital Solutions</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Primary" data-i18n-attr="aria-label:nav.primary">
+                <a href="#home" data-i18n="nav.home">Home</a>
+                <a href="#about" data-i18n="nav.about">About</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#projects" data-i18n="nav.projects">Projects</a>
+                <a href="#contact" data-i18n="nav.contact">Contact</a>
+            </nav>
+
+            <div class="header-controls">
+                <button class="lang-btn" id="lang-toggle" type="button" data-action="lang" aria-label="Switch language">
+        <span id="lang-label">عربي</span>
+      </button>
+                <button class="icon-btn" id="theme-toggle" type="button" data-action="theme" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </button>
+                <a class="btn btn-accent nav-cta" href="#contact"><span data-i18n="nav.contact">Contact</span></a>
+                <button class="icon-btn burger" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+            </div>
+        </div>
+
+        <nav class="mobile-menu" id="mobile-menu" aria-label="Menu" data-i18n-attr="aria-label:nav.menu">
+            <a href="#home" style="--i:0" data-i18n="nav.home">Home</a>
+            <a href="#about" style="--i:1" data-i18n="nav.about">About</a>
+            <a href="#services" style="--i:2" data-i18n="nav.services">Services</a>
+            <a href="#projects" style="--i:3" data-i18n="nav.projects">Projects</a>
+            <a href="#contact" style="--i:4" data-i18n="nav.contact">Contact</a>
+            <button class="menu-row" type="button" data-action="theme" style="--i:5">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <span data-i18n="menu.theme">Appearance</span>
+      <span class="menu-row-state" data-theme-state>Dark</span>
+    </button>
+            <button class="menu-row" type="button" data-action="lang" style="--i:6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span data-i18n="menu.lang">Language</span>
+      <span class="menu-row-state" data-lang-state>العربية</span>
+    </button>
+            <a class="btn btn-accent" id="menu-whatsapp" href="#" target="_blank" rel="noopener" style="--i:7">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span data-i18n="hero.cta1">Start a project</span>
+            </a>
+        </nav>
+    </header>
+
+    <main id="main">
+
+        <!-- ============ Hero ============ -->
+        <section class="hero" id="home">
+            <div class="container" data-reveal>
+                <span class="badge rv" style="--i:0"><span class="badge-dot" aria-hidden="true"></span><span data-i18n="hero.badge">Available for new projects</span></span>
+                <h1 class="rv" style="--i:1"><span data-i18n="hero.t1">Websites designed with intent,</span> <em data-i18n="hero.t2">built with care.</em></h1>
+                <p class="hero-sub rv" style="--i:2" data-i18n="hero.sub">From personal portfolios to complete business websites — every project starts with your goals and ends with a site that's clear, fast, and responsive on every screen.</p>
+                <div class="hero-cta rv" style="--i:3">
+                    <a class="btn btn-accent" id="hero-whatsapp" href="#" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <span data-i18n="hero.cta1">Start a project</span>
+                    </a>
+                    <a class="btn btn-ghost" href="#services"><span data-i18n="hero.cta2">Explore services</span></a>
+                </div>
+                <div class="hero-scroll rv" style="--i:4" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                    <span data-i18n="hero.scroll">Scroll to explore</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ About (compact — added as the destination for the navbar "About" link) ============ -->
+        <section class="section" id="about">
+            <div class="container" data-reveal>
+                <p class="eyebrow rv" style="--i:0" data-i18n="about.eyebrow">About</p>
+                <h2 class="section-title rv" style="--i:1" data-i18n="about.title">A small studio that treats every project like its own.</h2>
+                <p class="section-sub rv" style="--i:2" data-i18n="about.text">S.E Digital Solutions is a web design studio building personal portfolios, business websites, digital invitations, and landing pages. Each project is scoped to what it actually needs — designed around clear goals, quick loading, and a
+                    layout that holds up on every screen.</p>
+                <a class="about-link rv" style="--i:3" href="#services"><span data-i18n="about.cta">See what we build</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+            </div>
+        </section>
+
+        <!-- ============ Services (unchanged) ============ -->
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <p class="eyebrow rv" style="--i:0" data-i18n="services.eyebrow">What we do</p>
+                    <h2 class="section-title rv" style="--i:1" data-i18n="services.title">Seven services, one standard.</h2>
+                    <p class="section-sub rv" style="--i:2" data-i18n="services.sub">Every service below is delivered end-to-end — scoped to what your project actually needs, nothing it doesn't.</p>
+                </div>
+
+                <div class="services-grid" data-reveal>
+                    <!-- 01 · Featured flagship service -->
+                    <a class="service-card service-card--featured rv" style="--i:0" data-service="s1" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span>
+                        <span class="service-index" aria-hidden="true">01</span>
+                        </span>
+                        <span class="service-title" data-i18n="s1.title">Website Design &amp; Development</span>
+                        <span class="service-desc" data-i18n="s1.desc">Modern, responsive websites designed around each project's goals and user experience.</span>
+                        <span class="service-note" data-i18n="s1.note">From the first wireframe to launch day — one continuous, careful process.</span>
+                    </a>
+
+                    <!-- 02 -->
+                    <a class="service-card rv" style="--i:1" data-service="s2" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                        <span class="service-index" aria-hidden="true">02</span>
+                        </span>
+                        <span class="service-title" data-i18n="s2.title">Personal Portfolio Websites</span>
+                        <span class="service-desc" data-i18n="s2.desc">Professional portfolio websites that showcase skills, projects, and achievements.</span>
+                    </a>
+
+                    <!-- 03 -->
+                    <a class="service-card rv" style="--i:2" data-service="s3" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                        <span class="service-index" aria-hidden="true">03</span>
+                        </span>
+                        <span class="service-title" data-i18n="s3.title">Digital Invitations</span>
+                        <span class="service-desc" data-i18n="s3.desc">Elegant, interactive digital invitations for weddings, events, and special occasions.</span>
+                    </a>
+
+                    <!-- 04 -->
+                    <a class="service-card rv" style="--i:3" data-service="s4" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></span>
+                        <span class="service-index" aria-hidden="true">04</span>
+                        </span>
+                        <span class="service-title" data-i18n="s4.title">Landing Page Development</span>
+                        <span class="service-desc" data-i18n="s4.desc">Focused landing pages designed to present a service, product, or campaign clearly.</span>
+                    </a>
+
+                    <!-- 05 -->
+                    <a class="service-card rv" style="--i:4" data-service="s5" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
+                        <span class="service-index" aria-hidden="true">05</span>
+                        </span>
+                        <span class="service-title" data-i18n="s5.title">Business &amp; Company Websites</span>
+                        <span class="service-desc" data-i18n="s5.desc">Professional websites that introduce a business, present its services, and make contacting it easy.</span>
+                    </a>
+
+                    <!-- 06 -->
+                    <a class="service-card rv" style="--i:5" data-service="s6" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></span>
+                        <span class="service-index" aria-hidden="true">06</span>
+                        </span>
+                        <span class="service-title" data-i18n="s6.title">Website UI/UX Design</span>
+                        <span class="service-desc" data-i18n="s6.desc">Clean, intuitive interface layouts focused on usability, consistency, and visual quality.</span>
+                    </a>
+
+                    <!-- 07 -->
+                    <a class="service-card rv" style="--i:6" data-service="s7" href="#" target="_blank" rel="noopener">
+                        <span class="service-top">
+            <span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+                        <span class="service-index" aria-hidden="true">07</span>
+                        </span>
+                        <span class="service-title" data-i18n="s7.title">Website Improvements &amp; Responsive Optimization</span>
+                        <span class="service-desc" data-i18n="s7.desc">Improve existing website layouts, mobile usability, visual consistency, and front-end responsiveness.</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Featured projects ============ -->
+        <section class="section" id="projects">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <p class="eyebrow rv" style="--i:0" data-i18n="work.eyebrow">Featured projects</p>
+                    <h2 class="section-title rv" style="--i:1" data-i18n="work.title">Built, launched, and live.</h2>
+                    <p class="section-sub rv" style="--i:2" data-i18n="work.sub">Three real projects, deployed and in use — each card links straight to the running site.</p>
+                </div>
+
+                <div class="projects-grid" data-reveal>
+
+                    <!-- Project 01 · Islam & Dina — Wedding Invitation -->
+                    <article class="project-card rv" style="--i:0">
+                        <a class="project-shot" data-open="p1" href="https://islam-dina-wedding-invitation.vercel.app/" target="_blank" rel="noopener">
+                            <span class="shot-bar" aria-hidden="true">
+              <span class="shot-dots"><i></i><i></i><i></i></span>
+                            <span class="shot-url" dir="ltr">islam-dina-wedding-invitation.vercel.app</span>
+                            </span>
+                            <span class="shot-frame">
+              <img data-shot src="assets/projects/wedding-invitation.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" data-i18n-attr="alt:p1.alt">
+              <span class="shot-fallback" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><path d="m2 2 20 20"/></svg>
+                <strong class="shot-pending" data-i18n="shot.pending">Screenshot pending</strong>
+                <span class="shot-add" data-i18n="shot.add">Add your image at:</span>
+                            <code class="shot-path">assets/projects/wedding-invitation.webp</code>
+                            </span>
+                            </span>
+                        </a>
+                        <div class="project-body">
+                            <h3 class="project-title" data-i18n="p1.title">Islam &amp; Dina — Wedding Invitation</h3>
+                            <p class="project-desc" data-i18n="p1.desc">An elegant digital wedding invitation created for Islam &amp; Dina's wedding day.</p>
+                            <a class="btn btn-ghost project-cta" data-live="p1" href="https://islam-dina-wedding-invitation.vercel.app/" target="_blank" rel="noopener">
+                                <span data-i18n="proj.cta">View Live Project</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 02 · Al Gamal Architecture -->
+                    <article class="project-card rv" style="--i:1">
+                        <a class="project-shot" data-open="p2" href="https://al-gamal-architecture.vercel.app/" target="_blank" rel="noopener">
+                            <span class="shot-bar" aria-hidden="true">
+              <span class="shot-dots"><i></i><i></i><i></i></span>
+                            <span class="shot-url" dir="ltr">al-gamal-architecture.vercel.app</span>
+                            </span>
+                            <span class="shot-frame">
+              <img data-shot src="assets/projects/al-gamal-architecture.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" data-i18n-attr="alt:p2.alt">
+              <span class="shot-fallback" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><path d="m2 2 20 20"/></svg>
+                <strong class="shot-pending" data-i18n="shot.pending">Screenshot pending</strong>
+                <span class="shot-add" data-i18n="shot.add">Add your image at:</span>
+                            <code class="shot-path">assets/projects/al-gamal-architecture.webp</code>
+                            </span>
+                            </span>
+                        </a>
+                        <div class="project-body">
+                            <h3 class="project-title" data-i18n="p2.title">Al Gamal Architecture</h3>
+                            <p class="project-desc" data-i18n="p2.desc">A professional website introducing Al Gamal Architecture online.</p>
+                            <a class="btn btn-ghost project-cta" data-live="p2" href="https://al-gamal-architecture.vercel.app/" target="_blank" rel="noopener">
+                                <span data-i18n="proj.cta">View Live Project</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 03 · S.E Links -->
+                    <article class="project-card project-card--wide rv" style="--i:2">
+                        <a class="project-shot" data-open="p3" href="https://seif-links.vercel.app/" target="_blank" rel="noopener">
+                            <span class="shot-bar" aria-hidden="true">
+              <span class="shot-dots"><i></i><i></i><i></i></span>
+                            <span class="shot-url" dir="ltr">seif-links.vercel.app</span>
+                            </span>
+                            <span class="shot-frame">
+              <img data-shot src="assets/projects/seif-links.webp" alt="" width="1280" height="800" loading="lazy" decoding="async" data-i18n-attr="alt:p3.alt">
+              <span class="shot-fallback" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><path d="m2 2 20 20"/></svg>
+                <strong class="shot-pending" data-i18n="shot.pending">Screenshot pending</strong>
+                <span class="shot-add" data-i18n="shot.add">Add your image at:</span>
+                            <code class="shot-path">assets/projects/seif-links.webp</code>
+                            </span>
+                            </span>
+                        </a>
+                        <div class="project-body">
+                            <h3 class="project-title" data-i18n="p3.title">S.E Links</h3>
+                            <p class="project-desc" data-i18n="p3.desc">A link-in-bio page that gathers S.E's links in one place.</p>
+                            <a class="btn btn-ghost project-cta" data-live="p3" href="https://seif-links.vercel.app/" target="_blank" rel="noopener">
+                                <span data-i18n="proj.cta">View Live Project</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Contact (unchanged) ============ -->
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="contact-panel" data-reveal>
+                    <span class="contact-watermark" aria-hidden="true">S.E</span>
+                    <div class="rv" style="--i:0">
+                        <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
+                        <h2 class="contact-title" data-i18n="contact.title">Have a project in mind?</h2>
+                        <p class="contact-sub" data-i18n="contact.sub">Tell us what you need — a new website, a digital invitation, or improvements to a site you already have.</p>
+                    </div>
+                    <div class="contact-actions rv" style="--i:1">
+                        <a class="btn btn-ink" id="contact-whatsapp" href="#" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <span data-i18n="contact.whatsapp">Chat on WhatsApp</span>
+                        </a>
+                        <a class="btn btn-outline-ink" id="facebook-link" href="#" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            <span data-i18n="contact.facebook">Follow on Facebook</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-copy">© <span id="year">2025</span> S.E Digital Solutions · <span data-i18n="footer.rights">All rights reserved.</span></p>
+            <nav class="footer-nav" aria-label="Footer" data-i18n-attr="aria-label:nav.footer">
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#projects" data-i18n="nav.projects">Projects</a>
+                <a href="#contact" data-i18n="nav.contact">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            "use strict";
+
+            /* =====================================================================
+               TODO: replace with the real business details.
+               - whatsapp: international format, digits only (no "+", no spaces)
+               - facebook: full page URL
+            ===================================================================== */
+            var CONFIG = {
+                whatsapp: "201000000000",
+                facebook: "https://www.facebook.com/sedigitalsolutions",
+
+                /* ---- Project screenshots --------------------------------------
+                   Each card loads its LOCAL image first (assets/projects/…).
+                   If the local file is missing and useRemote is true, the card
+                   falls back to a genuine on-demand screenshot of the live URL
+                   via thum.io (free third-party service — no API key, but not
+                   guaranteed: first capture can take a few seconds and it may be
+                   rate-limited or blocked by ad blockers).
+                   Set useRemote to false for local-only mode.
+                   Alternative remote service (swap into remoteUrl):
+                     "https://s.wordpress.com/mshots/v1/" + encodeURIComponent(url) + "?w=1280"
+                ------------------------------------------------------------------ */
+                screenshots: {
+                    useRemote: true,
+                    remoteUrl: function(url) {
+                        return "https://image.thum.io/get/width/1280/crop/800/noanimate/" + url;
+                    }
+                },
+
+                /* Live project URLs + local image paths (single source of truth) */
+                projects: {
+                    p1: {
+                        url: "https://islam-dina-wedding-invitation.vercel.app/",
+                        img: "assets/projects/wedding-invitation.webp"
+                    },
+                    p2: {
+                        url: "https://al-gamal-architecture.vercel.app/",
+                        img: "assets/projects/al-gamal-architecture.webp"
+                    },
+                    p3: {
+                        url: "https://seif-links.vercel.app/",
+                        img: "assets/projects/seif-links.webp"
+                    }
+                }
+            };
+
+            /* ---------------- i18n dictionary (flat keys) ---------------- */
+            var I18N = {
+                en: {
+                    "meta.title": "S.E Digital Solutions — Website Design & Development",
+                    "a11y.skip": "Skip to content",
+                    "a11y.theme": "Toggle theme",
+                    "a11y.toLight": "Switch to light theme",
+                    "a11y.toDark": "Switch to dark theme",
+                    "a11y.langToAr": "التبديل إلى العربية",
+                    "a11y.langToEn": "Switch language to Arabic",
+                    "nav.primary": "Primary",
+                    "nav.menu": "Menu",
+                    "nav.footer": "Footer",
+                    "nav.home": "Home",
+                    "nav.about": "About",
+                    "nav.services": "Services",
+                    "nav.projects": "Projects",
+                    "nav.contact": "Contact",
+                    "menu.open": "Open menu",
+                    "menu.close": "Close menu",
+                    "menu.theme": "Appearance",
+                    "menu.lang": "Language",
+                    "theme.dark": "Dark",
+                    "theme.light": "Light",
+                    "brand.tagline": "Digital Solutions",
+                    "brand.home": "S.E Digital Solutions — Home",
+                    "hero.badge": "Available for new projects",
+                    "hero.t1": "Websites designed with intent,",
+                    "hero.t2": "built with care.",
+                    "hero.sub": "From personal portfolios to complete business websites — every project starts with your goals and ends with a site that's clear, fast, and responsive on every screen.",
+                    "hero.cta1": "Start a project",
+                    "hero.cta2": "Explore services",
+                    "hero.scroll": "Scroll to explore",
+                    "about.eyebrow": "About",
+                    "about.title": "A small studio that treats every project like its own.",
+                    "about.text": "S.E Digital Solutions is a web design studio building personal portfolios, business websites, digital invitations, and landing pages. Each project is scoped to what it actually needs — designed around clear goals, quick loading, and a layout that holds up on every screen.",
+                    "about.cta": "See what we build",
+                    "services.eyebrow": "What we do",
+                    "services.title": "Seven services, one standard.",
+                    "services.sub": "Every service below is delivered end-to-end — scoped to what your project actually needs, nothing it doesn't.",
+                    "s1.title": "Website Design & Development",
+                    "s1.desc": "Modern, responsive websites designed around each project's goals and user experience.",
+                    "s1.note": "From the first wireframe to launch day — one continuous, careful process.",
+                    "s2.title": "Personal Portfolio Websites",
+                    "s2.desc": "Professional portfolio websites that showcase skills, projects, and achievements.",
+                    "s3.title": "Digital Invitations",
+                    "s3.desc": "Elegant, interactive digital invitations for weddings, events, and special occasions.",
+                    "s4.title": "Landing Page Development",
+                    "s4.desc": "Focused landing pages designed to present a service, product, or campaign clearly.",
+                    "s5.title": "Business & Company Websites",
+                    "s5.desc": "Professional websites that introduce a business, present its services, and make contacting it easy.",
+                    "s6.title": "Website UI/UX Design",
+                    "s6.desc": "Clean, intuitive interface layouts focused on usability, consistency, and visual quality.",
+                    "s7.title": "Website Improvements & Responsive Optimization",
+                    "s7.desc": "Improve existing website layouts, mobile usability, visual consistency, and front-end responsiveness.",
+                    "serviceAsk": "Ask about",
+                    "work.eyebrow": "Featured projects",
+                    "work.title": "Built, launched, and live.",
+                    "work.sub": "Three real projects, deployed and in use — each card links straight to the running site.",
+                    "p1.title": "Islam & Dina — Wedding Invitation",
+                    "p1.desc": "An elegant digital wedding invitation created for Islam & Dina's wedding day.",
+                    "p1.alt": "Screenshot of the Islam & Dina wedding invitation",
+                    "p2.title": "Al Gamal Architecture",
+                    "p2.desc": "A professional website introducing Al Gamal Architecture online.",
+                    "p2.alt": "Screenshot of the Al Gamal Architecture website",
+                    "p3.title": "S.E Links",
+                    "p3.desc": "A link-in-bio page that gathers S.E's links in one place.",
+                    "p3.alt": "Screenshot of the S.E Links page",
+                    "proj.cta": "View Live Project",
+                    "shot.pending": "Screenshot pending",
+                    "shot.add": "Add your image at:",
+                    "contact.eyebrow": "Contact",
+                    "contact.title": "Have a project in mind?",
+                    "contact.sub": "Tell us what you need — a new website, a digital invitation, or improvements to a site you already have.",
+                    "contact.whatsapp": "Chat on WhatsApp",
+                    "contact.facebook": "Follow on Facebook",
+                    "wa.general": "Hello S.E Digital Solutions! I'd like to discuss a project.",
+                    "wa.service": "Hello! I'm interested in: ",
+                    "footer.rights": "All rights reserved."
+                },
+                ar: {
+                    "meta.title": "S.E Digital Solutions — تصميم وتطوير المواقع",
+                    "a11y.skip": "تخطَّ إلى المحتوى",
+                    "a11y.theme": "تبديل المظهر",
+                    "a11y.toLight": "التبديل إلى المظهر الفاتح",
+                    "a11y.toDark": "التبديل إلى المظهر الداكن",
+                    "a11y.langToAr": "التبديل إلى العربية",
+                    "a11y.langToEn": "Switch language to Arabic",
+                    "nav.primary": "التنقل الرئيسي",
+                    "nav.menu": "قائمة التصفح",
+                    "nav.footer": "روابط التذييل",
+                    "nav.home": "الرئيسية",
+                    "nav.about": "من نحن",
+                    "nav.services": "الخدمات",
+                    "nav.projects": "المشاريع",
+                    "nav.contact": "تواصل معنا",
+                    "menu.open": "فتح القائمة",
+                    "menu.close": "إغلاق القائمة",
+                    "menu.theme": "المظهر",
+                    "menu.lang": "اللغة",
+                    "theme.dark": "داكن",
+                    "theme.light": "فاتح",
+                    "brand.tagline": "حلول رقمية",
+                    "brand.home": "S.E Digital Solutions — الرئيسية",
+                    "hero.badge": "متاحون لمشاريع جديدة",
+                    "hero.t1": "مواقع تُصمَّم بوعي،",
+                    "hero.t2": "وتُبنى بإتقان.",
+                    "hero.sub": "من مواقع الأعمال الشخصية إلى مواقع الشركات المتكاملة — كل مشروع يبدأ من أهدافك وينتهي بموقع واضح وسريع ومتجاوب على كل الشاشات.",
+                    "hero.cta1": "ابدأ مشروعك",
+                    "hero.cta2": "تصفَّح الخدمات",
+                    "hero.scroll": "مرِّر للاستكشاف",
+                    "about.eyebrow": "من نحن",
+                    "about.title": "استوديو صغير يتعامل مع كل مشروع وكأنه مشروعه الخاص.",
+                    "about.text": "S.E Digital Solutions استوديو تصميم مواقع يبني مواقع الأعمال الشخصية ومواقع الشركات والدعوات الرقمية وصفحات الهبوط. كل مشروع يُحدَّد نطاقه بحسب احتياجه الفعلي — بتصميم يخدم أهدافًا واضحة، وتحميل سريع، وتخطيط يعمل جيدًا على كل الشاشات.",
+                    "about.cta": "تصفَّح ما نقدِّمه",
+                    "services.eyebrow": "ما نقدِّمه",
+                    "services.title": "سبع خدمات، ومعيار واحد.",
+                    "services.sub": "كل خدمة تُنفَّذ من البداية إلى النهاية — بحسب ما يحتاجه مشروعك فعلًا، لا أكثر.",
+                    "s1.title": "تصميم وتطوير المواقع",
+                    "s1.desc": "مواقع عصرية ومتجاوبة، تُصمَّم حول أهداف كل مشروع وتجربة مستخدميه.",
+                    "s1.note": "من المخطط الأول حتى يوم الإطلاق — عملية واحدة متصلة ومتقنة.",
+                    "s2.title": "مواقع الأعمال الشخصية",
+                    "s2.desc": "مواقع احترافية تعرض مهاراتك ومشاريعك وإنجازاتك.",
+                    "s3.title": "الدعوات الرقمية",
+                    "s3.desc": "دعوات رقمية أنيقة وتفاعلية لحفلات الزفاف والمناسبات الخاصة.",
+                    "s4.title": "تطوير صفحات الهبوط",
+                    "s4.desc": "صفحات هبوط مركَّزة تعرض خدمة أو منتجًا أو حملة بوضوح.",
+                    "s5.title": "مواقع الشركات والأنشطة التجارية",
+                    "s5.desc": "مواقع احترافية تقدِّم نشاطك التجاري وخدماتك، وتُسهِّل على العملاء التواصل معك.",
+                    "s6.title": "تصميم الواجهات وتجربة الاستخدام",
+                    "s6.desc": "تصاميم واجهات نظيفة وبديهية، تركِّز على سهولة الاستخدام والاتساق والجودة البصرية.",
+                    "s7.title": "تحسين المواقع وتوافقها مع الجوال",
+                    "s7.desc": "تحسين تخطيطات المواقع الحالية وسهولة استخدامها على الجوال واتساقها البصري واستجابة واجهاتها.",
+                    "serviceAsk": "استفسر عن",
+                    "work.eyebrow": "مشاريع مميزة",
+                    "work.title": "منفَّذة ومنشورة ومباشرة.",
+                    "work.sub": "ثلاثة مشاريع حقيقية منشورة على الإنترنت — كل بطاقة تنقلك مباشرة إلى الموقع.",
+                    "p1.title": "إسلام ودينا — دعوة زفاف",
+                    "p1.desc": "دعوة زفاف رقمية أنيقة أُعِدَّت لحفل زفاف إسلام ودينا.",
+                    "p1.alt": "لقطة شاشة لدعوة زفاف إسلام ودينا",
+                    "p2.title": "Al Gamal Architecture",
+                    "p2.desc": "موقع احترافي يعرِّف بشركة Al Gamal Architecture عبر الإنترنت.",
+                    "p2.alt": "لقطة شاشة لموقع Al Gamal Architecture",
+                    "p3.title": "S.E Links",
+                    "p3.desc": "صفحة روابط تجمع روابط S.E في مكان واحد.",
+                    "p3.alt": "لقطة شاشة لصفحة S.E Links",
+                    "proj.cta": "عرض المشروع المباشر",
+                    "shot.pending": "بانتظار لقطة الشاشة",
+                    "shot.add": "أضِف صورتك في المسار:",
+                    "contact.eyebrow": "تواصل",
+                    "contact.title": "لديك فكرة مشروع؟",
+                    "contact.sub": "أخبرنا بما تحتاجه — موقعًا جديدًا، دعوة رقمية، أو تحسينات على موقع لديك بالفعل.",
+                    "contact.whatsapp": "تواصل عبر واتساب",
+                    "contact.facebook": "تابعنا على فيسبوك",
+                    "wa.general": "مرحبًا S.E Digital Solutions! أودّ مناقشة مشروع معكم.",
+                    "wa.service": "مرحبًا! أنا مهتم بخدمة: ",
+                    "footer.rights": "جميع الحقوق محفوظة."
+                }
+            };
+
+            var lang = "en";
+            var d = document;
+
+            function $(s, c) {
+                return (c || d).querySelector(s);
+            }
+
+            function $$(s, c) {
+                return Array.prototype.slice.call((c || d).querySelectorAll(s));
+            }
+
+            function store(k, v) {
+                try {
+                    localStorage.setItem(k, v);
+                } catch (e) {}
+            }
+
+            function read(k) {
+                try {
+                    return localStorage.getItem(k);
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function waUrl(msg) {
+                return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
+            }
+
+            /* ---------------- Project screenshots ----------------
+               Local file first; if missing, optionally try a genuine
+               remote screenshot of the live URL; if that fails too,
+               show the honest "pending" panel with the expected path. */
+            function initShots() {
+                var S = CONFIG.screenshots || {};
+                $$(".project-shot").forEach(function(a) {
+                    var p = CONFIG.projects[a.dataset.open];
+                    if (!p) return;
+                    a.href = p.url;
+                    var img = a.querySelector("img[data-shot]");
+                    if (!img) return;
+                    var pending = a.querySelector(".shot-fallback");
+                    var triedRemote = false;
+
+                    function showPending() {
+                        if (pending) pending.hidden = false;
+                        img.style.display = "none";
+                    }
+                    img.addEventListener("load", function() {
+                        img.style.visibility = "";
+                        if (pending) pending.hidden = true;
+                    });
+                    img.addEventListener("error", function() {
+                        if (S.useRemote && !triedRemote && typeof S.remoteUrl === "function") {
+                            triedRemote = true;
+                            img.style.visibility = "hidden"; // no broken-image flash while retrying
+                            img.src = S.remoteUrl(p.url);
+                        } else {
+                            showPending();
+                        }
+                    });
+                });
+            }
+
+            /* ---------------- Links (WhatsApp deep links, Facebook, live projects) ---------------- */
+            function buildLinks() {
+                var general = waUrl(I18N[lang]["wa.general"]);
+                ["hero-whatsapp", "contact-whatsapp", "menu-whatsapp"].forEach(function(id) {
+                    var el = d.getElementById(id);
+                    if (el) el.href = general;
+                });
+                $$("[data-service]").forEach(function(card) {
+                    var title = I18N[lang][card.dataset.service + ".title"];
+                    card.href = waUrl(I18N[lang]["wa.service"] + title);
+                    card.setAttribute("aria-label", I18N[lang]["serviceAsk"] + " " + title);
+                });
+                $$("[data-live]").forEach(function(el) {
+                    var p = CONFIG.projects[el.dataset.live];
+                    if (p) el.href = p.url;
+                });
+                var fb = d.getElementById("facebook-link");
+                if (fb) fb.href = CONFIG.facebook;
+            }
+
+            /* ---------------- Control state labels (theme rows, lang rows) ---------------- */
+            function syncControls() {
+                var t = d.documentElement.getAttribute("data-theme");
+                $$("[data-theme-state]").forEach(function(el) {
+                    el.textContent = I18N[lang][t === "dark" ? "theme.dark" : "theme.light"];
+                });
+                $$("[data-lang-state]").forEach(function(el) {
+                    el.textContent = lang === "en" ? "العربية" : "English";
+                });
+            }
+
+            /* ---------------- Theme ---------------- */
+            function applyTheme(t) {
+                d.documentElement.setAttribute("data-theme", t);
+                var meta = $('meta[name="theme-color"]');
+                if (meta) meta.setAttribute("content", t === "dark" ? "#0d110e" : "#f6f4ed");
+                $$('[data-action="theme"]').forEach(function(b) {
+                    b.setAttribute("aria-label", I18N[lang][t === "dark" ? "a11y.toLight" : "a11y.toDark"]);
+                });
+                syncControls();
+                store("se-theme", t);
+            }
+
+            /* ---------------- Language ---------------- */
+            function applyLang(l) {
+                lang = l;
+                var root = d.documentElement;
+                root.setAttribute("lang", l);
+                root.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
+                d.title = I18N[l]["meta.title"];
+
+                $$("[data-i18n]").forEach(function(el) {
+                    var v = I18N[l][el.dataset.i18n];
+                    if (typeof v === "string") el.textContent = v;
+                });
+                $$("[data-i18n-attr]").forEach(function(el) {
+                    el.dataset.i18nAttr.split(";").forEach(function(part) {
+                        var i = part.indexOf(":");
+                        if (i < 0) return;
+                        var attr = part.slice(0, i).trim(),
+                            key = part.slice(i + 1).trim();
+                        var v = I18N[l][key];
+                        if (typeof v === "string") el.setAttribute(attr, v);
+                    });
+                });
+
+                var ll = d.getElementById("lang-label");
+                if (ll) ll.textContent = l === "en" ? "عربي" : "EN";
+                $$('[data-action="lang"]').forEach(function(b) {
+                    b.setAttribute("aria-label", l === "en" ? I18N[l]["a11y.langToAr"] : I18N[l]["a11y.langToEn"]);
+                });
+                syncControls();
+
+                // Re-sync stateful labels (menu may be open, theme is whatever it is)
+                var header = d.getElementById("site-header");
+                var open = header && header.classList.contains("menu-open");
+                var mt = d.getElementById("menu-toggle");
+                if (mt) mt.setAttribute("aria-label", I18N[l][open ? "menu.close" : "menu.open"]);
+                applyTheme(d.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+
+                buildLinks();
+                store("se-lang", l);
+            }
+
+            /* ---------------- Mobile menu ---------------- */
+            var header = d.getElementById("site-header");
+            var menuBtn = d.getElementById("menu-toggle");
+
+            function setMenu(open) {
+                header.classList.toggle("menu-open", open);
+                menuBtn.setAttribute("aria-expanded", String(open));
+                menuBtn.setAttribute("aria-label", I18N[lang][open ? "menu.close" : "menu.open"]);
+                if (open) {
+                    var first = $("#mobile-menu a");
+                    if (first) first.focus();
+                }
+            }
+            menuBtn.addEventListener("click", function() {
+                setMenu(!header.classList.contains("menu-open"));
+            });
+            $$("#mobile-menu a").forEach(function(a) {
+                a.addEventListener("click", function() {
+                    setMenu(false);
+                });
+            });
+            d.addEventListener("keydown", function(e) {
+                if (e.key === "Escape" && header.classList.contains("menu-open")) {
+                    setMenu(false);
+                    menuBtn.focus();
+                }
+            });
+            window.addEventListener("resize", function() {
+                if (window.innerWidth >= 960 && header.classList.contains("menu-open")) setMenu(false);
+            });
+
+            /* ---------------- Scroll-spy: highlight the current section in both navs ---------------- */
+            function setActiveSection(id) {
+                $$(".main-nav a, .mobile-menu a").forEach(function(a) {
+                    var on = a.getAttribute("href") === "#" + id;
+                    a.classList.toggle("active", on);
+                    if (on) a.setAttribute("aria-current", "true");
+                    else a.removeAttribute("aria-current");
+                });
+            }
+            if ("IntersectionObserver" in window) {
+                var spy = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(en) {
+                        if (en.isIntersecting) setActiveSection(en.target.id);
+                    });
+                }, {
+                    rootMargin: "-40% 0px -55% 0px"
+                });
+                ["home", "about", "services", "projects", "contact"].forEach(function(id) {
+                    var s = d.getElementById(id);
+                    if (s) spy.observe(s);
+                });
+                window.addEventListener("scroll", function() {
+                    if (window.innerHeight + window.scrollY >= d.documentElement.scrollHeight - 40) {
+                        setActiveSection("contact");
+                    }
+                }, {
+                    passive: true
+                });
+            }
+            setActiveSection("home");
+
+            /* ---------------- Header hairline + shadow on scroll ---------------- */
+            function onScroll() {
+                header.classList.toggle("scrolled", window.scrollY > 8);
+            }
+            onScroll();
+            window.addEventListener("scroll", onScroll, {
+                passive: true
+            });
+
+            /* ---------------- Reveal on scroll ---------------- */
+            var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var io = ("IntersectionObserver" in window && !reduced) ?
+                new IntersectionObserver(function(entries) {
+                    entries.forEach(function(en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add("in");
+                            io.unobserve(en.target);
+                        }
+                    });
+                }, {
+                    threshold: .12,
+                    rootMargin: "0px 0px -40px 0px"
+                }) :
+                null;
+            $$("[data-reveal]").forEach(function(el) {
+                if (io) io.observe(el);
+                else el.classList.add("in");
+            });
+
+            /* ---------------- Toggles (header + mobile menu rows share these actions) ---------------- */
+            $$('[data-action="theme"]').forEach(function(b) {
+                b.addEventListener("click", function() {
+                    applyTheme(d.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+                });
+            });
+            $$('[data-action="lang"]').forEach(function(b) {
+                b.addEventListener("click", function() {
+                    applyLang(lang === "en" ? "ar" : "en");
+                });
+            });
+
+            var y = d.getElementById("year");
+            if (y) y.textContent = new Date().getFullYear();
+            applyLang(read("se-lang") === "ar" ? "ar" : "en");
+            applyTheme(read("se-theme") === "light" ? "light" : "dark");
+            initShots();
+        })();
+    </script>
+</body>
+
+</html>
