@@ -1651,52 +1651,39 @@
     </footer>
 
     <script>
-        (function() {
-            "use strict";
+    
+(function() {
+    "use strict";
 
-            /* =====================================================================
-               TODO: replace with the real business details.
-               - whatsapp: international format, digits only (no "+", no spaces)
-               - facebook: full page URL
-            ===================================================================== */
-            var CONFIG = {
-                whatsapp: "201000000000",
-                facebook: "https://www.facebook.com/sedigitalsolutions",
+    /* Business details */
+    var CONFIG = {
+        whatsapp: "201012087282",
+        facebook: "https://www.facebook.com/share/1DoxNDi1W4/?mibextid=wwXIfr",
 
-                /* ---- Project screenshots --------------------------------------
-                   Each card loads its LOCAL image first (assets/projects/…).
-                   If the local file is missing and useRemote is true, the card
-                   falls back to a genuine on-demand screenshot of the live URL
-                   via thum.io (free third-party service — no API key, but not
-                   guaranteed: first capture can take a few seconds and it may be
-                   rate-limited or blocked by ad blockers).
-                   Set useRemote to false for local-only mode.
-                   Alternative remote service (swap into remoteUrl):
-                     "https://s.wordpress.com/mshots/v1/" + encodeURIComponent(url) + "?w=1280"
-                ------------------------------------------------------------------ */
-                screenshots: {
-                    useRemote: true,
-                    remoteUrl: function(url) {
-                        return "https://image.thum.io/get/width/1280/crop/800/noanimate/" + url;
-                    }
-                },
+        /* Project screenshots */
+        screenshots: {
+            useRemote: true,
+            remoteUrl: function(url) {
+                return "https://image.thum.io/get/width/1280/crop/800/noanimate/" + url;
+            }
+        },
 
-                /* Live project URLs + local image paths (single source of truth) */
-                projects: {
-                    p1: {
-                        url: "https://islam-dina-wedding-invitation.vercel.app/",
-                        img: "assets/projects/wedding-invitation.webp"
-                    },
-                    p2: {
-                        url: "https://al-gamal-architecture.vercel.app/",
-                        img: "assets/projects/al-gamal-architecture.webp"
-                    },
-                    p3: {
-                        url: "https://seif-links.vercel.app/",
-                        img: "assets/projects/seif-links.webp"
-                    }
-                }
-            };
+        /* Live project URLs + local image paths */
+        projects: {
+            p1: {
+                url: "https://islam-dina-wedding-invitation.vercel.app/",
+                img: "assets/projects/wedding-invitation.webp"
+            },
+            p2: {
+                url: "https://al-gamal-architecture.vercel.app/",
+                img: "assets/projects/al-gamal-architecture.webp"
+            },
+            p3: {
+                url: "https://seif-links.vercel.app/",
+                img: "assets/projects/seif-links.webp"
+            }
+        }
+    };
 
             /* ---------------- i18n dictionary (flat keys) ---------------- */
             var I18N = {
